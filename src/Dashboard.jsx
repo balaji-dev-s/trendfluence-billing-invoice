@@ -5,13 +5,11 @@ export default function Dashboard() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // check if user is logged in
-        fetch("http://localhost:5000/dashboard", {
+        fetch(`${import.meta.env.VITE_API_URL}/dashboard`, {
             credentials: "include"
         })
             .then(res => {
                 if (!res.ok) {
-                    // not logged in → redirect
                     navigate("/");
                 }
             })
@@ -19,7 +17,7 @@ export default function Dashboard() {
     }, []);
 
     const logout = async () => {
-        await fetch("http://localhost:5000/auth/logout", {
+        await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
             method: "POST",
             credentials: "include"
         });
