@@ -6,7 +6,7 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
-            const res = await fetch("http://localhost:5000/auth/login", {
+            const res = await fetch("https://trendfluence-backend.onrender.com/", {
                 method: "POST",
                 credentials: "include", // for cookies
                 headers: {
