@@ -6,7 +6,7 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
-            const res = await fetch("https://trendfluence-backend.onrender.com/auth/login", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
