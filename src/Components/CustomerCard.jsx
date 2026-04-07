@@ -13,7 +13,7 @@ export default function CustomerCard({ customers, refresh }) {
         <div className="card p-3 mt-4 shadow-sm">
             {/* Header with icon and customer count */}
             <h5><i className="bi bi-person-circle me-2"></i>Customers</h5>
-            <div className="fs-1">
+            <div className="fs-1 fw-bold">
                 {customers.length}
             </div>
 
