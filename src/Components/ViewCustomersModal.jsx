@@ -1,65 +1,85 @@
 // ViewCustomersModal.jsx
-// Popup modal to view all customers, search, edit, and delete.
+// Modal to view all customers, edit, delete, and search
 
-import React, { useState, useEffect } from "react";
-import EditCustomerModal from "./EditCustomerModal.jsx";
+import React, { useEffect, useState } from "react";
 
 export default function ViewCustomersModal({ onClose, refresh }) {
     const [customers, setCustomers] = useState([]);
     const [search, setSearch] = useState("");
-    const [editing, setEditing] = useState(null); // store customer being edited
 
-    // Fetch customers from backend, with optional search
-    const fetchCustomers = async () => {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/customers?search=${search}`, { credentials: "include" });
-        const data = await res.json();
-        setCustomers(data);
+    const fetchCustomers = async (query = "") => {
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/customers?search=${query}`, {
+                credentials: "include"
+            });
+            const data = await res.json();
+            setCustomers(data);
+        } catch { alert("Server error"); }
     };
 
-    useEffect(() => { fetchCustomers(); }, [search]);
+    useEffect(() => { fetchCustomers(); }, []);
 
-    // Delete customer
-    const deleteCustomer = async (id) => {
+    const handleDelete = async (id) => {
         if (!window.confirm("Delete this customer?")) return;
         await fetch(`${import.meta.env.VITE_API_URL}/customers/${id}`, { method: "DELETE", credentials: "include" });
-        fetchCustomers();
-        refresh(); // update count in dashboard
+        fetchCustomers(search);
+        refresh();
+    };
+
+    const handleEdit = async (id) => {
+        const newName = prompt("Enter new name");
+        const newPhone = prompt("Enter new phone");
+        const newAddress = prompt("Enter new address");
+        if (!newName || !newPhone) return alert("Name and phone required");
+        await fetch(`${import.meta.env.VITE_API_URL}/customers/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: newName, phone: newPhone, address: newAddress }),
+            credentials: "include"
+        });
+        fetchCustomers(search);
+        refresh();
     };
 
     return (
-        <div className="modal-backdrop d-flex justify-content-center align-items-center">
-            <div className="modal-dialog p-3 bg-light rounded shadow" style={{ width: 600, maxHeight: "70vh", overflowY: "auto" }}>
-                <h5>Customers</h5>
-
-                {/* Search input */}
-                <input className="form-control my-2" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} />
-
-                {/* Customer table */}
-                <table className="table table-striped">
-                    <thead>
-                        <tr><th>Name</th><th>Phone</th><th>Address</th><th>Actions</th></tr>
-                    </thead>
-                    <tbody>
-                        {customers.map(c => (
-                            <tr key={c._id}>
-                                <td>{c.name}</td>
-                                <td>{c.phone}</td>
-                                <td>{c.address}</td>
-                                <td>
-                                    <button className="btn btn-sm btn-warning me-2" onClick={() => setEditing(c)}>Edit</button>
-                                    <button className="btn btn-sm btn-danger" onClick={() => deleteCustomer(c._id)}>Delete</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-
-                <div className="d-flex justify-content-end mt-2">
-                    <button className="btn btn-secondary" onClick={onClose}>Close</button>
+        <div className="modal d-block" tabIndex="-1">
+            <div className="modal-dialog modal-lg">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">View Customers</h5>
+                        <button type="button" className="btn-close" onClick={onClose}></button>
+                    </div>
+                    <div className="modal-body">
+                        <input className="form-control mb-2" placeholder="Search..." value={search} onChange={e => { setSearch(e.target.value); fetchCustomers(e.target.value); }} />
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {customers.map(c => (
+                                    <tr key={c._id}>
+                                        <td>{c.name}</td>
+                                        <td>{c.phone}</td>
+                                        <td>{c.address}</td>
+                                        <td>
+                                            <button className="btn btn-sm btn-warning me-1" onClick={() => handleEdit(c._id)}>Edit</button>
+                                            <button className="btn btn-sm btn-danger" onClick={() => handleDelete(c._id)}>Delete</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                                {customers.length === 0 && <tr><td colSpan="4" className="text-center">No customers found</td></tr>}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-secondary" onClick={onClose}>Close</button>
+                    </div>
                 </div>
-
-                {/* Show edit modal if editing */}
-                {editing && <EditCustomerModal customer={editing} onClose={() => setEditing(null)} refresh={() => { fetchCustomers(); refresh(); }} />}
             </div>
         </div>
     );
