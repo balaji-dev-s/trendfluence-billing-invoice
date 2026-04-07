@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from "../assets/trend-logo.png";
 
 export default function Header({ onLogout }) {
     const [darkMode, setDarkMode] = useState(false);
@@ -12,7 +13,7 @@ export default function Header({ onLogout }) {
         <header className="d-flex justify-content-between align-items-center p-3 mb-4 border-bottom">
             {/* Logo */}
             <div className="d-flex align-items-center">
-                <img src="/logo.png" alt="Logo" style={{ height: "40px" }} />
+                <img src={logo} alt="Logo" style={{ height: "40px" }} />
                 <h4 className="ms-2 mb-0">Invoice Dashboard</h4>
             </div>
 

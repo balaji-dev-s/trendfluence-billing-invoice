@@ -47,7 +47,7 @@ export default function Dashboard() {
 
     return (
         <div className="container mt-3">
-            {/* Header with logout */}
+            {/* Header*/}
             <Header onLogout={handleLogout} />
 
             {/* Dashboard content */}
