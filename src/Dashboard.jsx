@@ -26,6 +26,18 @@ export default function Dashboard() {
         window.location.href = "/";
     };
 
+    const [customers, setCustomers] = useState([]);
+
+    const refresh = async () => {
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/customers`, { credentials: "include" });
+            const data = await res.json();
+            setCustomers(data);
+        } catch { console.log("Error fetching customers"); }
+    };
+
+    useEffect(() => { refresh(); }, []);
+
     return (
         <div className="container mt-3">
             {/* Header */}
