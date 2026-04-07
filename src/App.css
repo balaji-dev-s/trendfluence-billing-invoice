@@ -1,0 +1,14 @@
+.login-btn {
+    border: 1px solid #ed1c24 !important;
+    color: whitesmoke !important;
+    background-color: #ed1c24 !important;
+    transition: 0.15s all !important;
+}
+
+.login-btn:hover {
+    opacity: .8;
+}
+
+.card{
+    background-color: whitesmoke;
+}

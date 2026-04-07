@@ -1,5 +1,6 @@
 import { useState } from "react";
-import logo from "../assets/trend-logo.png";
+import Logo from "./assets/trend-logo.png";
+import "./App.css";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -51,7 +52,7 @@ export default function Login() {
     };
 
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="container-fluid bg-dark d-flex justify-content-center align-items-center vh-100">
 
             {/* SUCCESS POPUP */}
             {success && (
@@ -63,8 +64,11 @@ export default function Login() {
             )}
 
             <div className="card p-4 shadow" style={{ width: "300px" }}>
-                <img src={logo} alt="Logo" style={{ height: "70px" }} />
-                <h1 className="text-center">TRENDFLUENCE INVOICE DASHBOARD</h1>
+                <div className="d-flex justify-content-center">
+                    <img src={Logo} alt="Logo" style={{ width: "200px" }} />
+                </div>
+
+                <h1 className="text-center fw-bold fs-2">TRENDFLUENCE</h1>
                 <h4 className="text-center">Login</h4>
 
                 {/* EMAIL */}
@@ -92,7 +96,7 @@ export default function Login() {
                     <div className="text-danger small">{error.password}</div>
                 )}
 
-                <button className="btn btn-primary w-100 mt-3" onClick={handleLogin}>
+                <button className="btn btn-primary login-btn w-100 mt-3" onClick={handleLogin}>
                     Login
                 </button>
             </div>
