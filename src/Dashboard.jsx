@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./Components/Header";
+
 
 export default function Dashboard() {
     const navigate = useNavigate();
@@ -9,14 +11,12 @@ export default function Dashboard() {
             credentials: "include"
         })
             .then(res => {
-                if (!res.ok) {
-                    navigate("/");
-                }
+                if (!res.ok) navigate("/");
             })
             .catch(() => navigate("/"));
     }, []);
 
-    const logout = async () => {
+    const handleLogout = async () => {
         await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
             method: "POST",
             credentials: "include"
@@ -26,12 +26,13 @@ export default function Dashboard() {
     };
 
     return (
-        <div className="container mt-5">
-            <h2>Dashboard</h2>
-            <p>Welcome Admin 👋</p>
-            <button className="btn btn-danger mt-3" onClick={logout}>
-                Logout
-            </button>
+        <div className="container mt-3">
+            {/* Header */}
+            <Header onLogout={handleLogout} />
+
+            {/* Dashboard content */}
+            <h2>Welcome Admin 👋</h2>
+            <p>Here you will see stats, buttons, and reports soon.</p>
         </div>
     );
 }
