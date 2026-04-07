@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import logo from "../assets/trend-logo.png";
 import React, { useState, useEffect } from "react";
 
