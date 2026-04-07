@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Components/Header";
+import CustomerCard from "./Components/CustomerCard";
 
 
 export default function Dashboard() {
@@ -32,7 +33,9 @@ export default function Dashboard() {
 
             {/* Dashboard content */}
             <h2>Welcome Admin 👋</h2>
-            <p>Here you will see stats, buttons, and reports soon.</p>
+            <div className="container mt-4">
+                <CustomerCard customers={customers} refresh={fetchCustomers} />
+            </div>
         </div>
     );
 }
