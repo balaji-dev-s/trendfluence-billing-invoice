@@ -1,5 +1,5 @@
 // CustomerCard.jsx
-// This is the main container card in dashboard for customer management
+// Main dashboard card for customer management
 // Shows customer count and buttons to add or view customers.
 
 import React, { useState } from "react";
@@ -21,9 +21,20 @@ export default function CustomerCard({ customers, refresh }) {
                 <button className="btn btn-info" onClick={() => setShowView(true)}>View Customers</button>
             </div>
 
-            {/* Show modals if needed */}
-            {showAdd && <AddCustomerModal onClose={() => setShowAdd(false)} refresh={refresh} />}
-            {showView && <ViewCustomersModal onClose={() => setShowView(false)} refresh={refresh} />}
+            {/* Modals */}
+            {showAdd && (
+                <AddCustomerModal
+                    onClose={() => setShowAdd(false)}
+                    refresh={refresh} // refresh parent state after adding
+                />
+            )}
+            {showView && (
+                <ViewCustomersModal
+                    onClose={() => setShowView(false)}
+                    customers={customers} // pass current customers array
+                    refresh={refresh} // refresh after edit/delete
+                />
+            )}
         </div>
     );
 }
