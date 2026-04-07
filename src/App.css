@@ -12,3 +12,7 @@
 .card{
     background-color: whitesmoke;
 }
+
+.text-danger-custom {
+    color: #ed1c24 !important;
+}

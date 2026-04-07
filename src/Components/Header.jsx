@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import logo from "../assets/trend-logo.png";
+import React, { useState, useEffect } from "react";
 
 export default function Header({ onLogout }) {
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
 
-    const toggleMode = () => {
-        setDarkMode(!darkMode);
-        document.body.className = darkMode ? "bg-light text-dark" : "bg-dark text-light";
-    };
+    useEffect(() => {
+        document.body.setAttribute("data-bs-theme", darkMode ? "dark" : "light");
+        localStorage.setItem("theme", darkMode ? "dark" : "light");
+    }, [darkMode]);
+
+    const toggleMode = () => setDarkMode(!darkMode);
 
     return (
         <header className="d-flex justify-content-between align-items-center p-3 mb-4 border-bottom">

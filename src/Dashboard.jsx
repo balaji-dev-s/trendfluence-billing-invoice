@@ -51,7 +51,9 @@ export default function Dashboard() {
             <Header onLogout={handleLogout} />
 
             {/* Dashboard content */}
-            <h2>Welcome Admin 👋</h2>
+            <h2>Welcome back, Christopher James -
+                <span className="fw-semibold text-danger-custom  fst-italic">
+                    Trendfluence Dashboard</span></h2>
 
             {/* Customer management card */}
             <div className="container mt-4">

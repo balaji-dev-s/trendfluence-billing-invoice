@@ -28,7 +28,7 @@ export default function Login() {
                 // auto redirect after 1.5s
                 setTimeout(() => {
                     window.location.href = "/dashboard";
-                }, 1500);
+                }, 1000);
 
             } else {
                 // handle backend messages
