@@ -12,7 +12,10 @@ export default function CustomerCard({ customers, refresh }) {
     return (
         <div className="card p-3 mt-4 shadow-sm">
             {/* Header with icon and customer count */}
-            <h5><i className="bi bi-person-circle me-2"></i>Customers ({customers.length})</h5>
+            <h5><i className="bi bi-person-circle me-2"></i>Customers</h5>
+            <div className="fs-1">
+                {customers.length}
+            </div>
 
             {/* Buttons */}
             <div className="mt-3 d-flex gap-2">
