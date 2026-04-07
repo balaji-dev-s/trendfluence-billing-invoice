@@ -1,5 +1,5 @@
 import logo from "../assets/trend-logo.png";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function Header({ onLogout }) {
     const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
